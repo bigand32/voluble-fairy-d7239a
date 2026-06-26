@@ -181,7 +181,7 @@
             <div class="nav-menu hidden md:flex items-center text-sm font-medium tracking-wide">
                 <a href="#about" data-nav="home" class="nav-link hover:text-gray-300 transition-colors">회사소개</a>
                 <span class="nav-dot">·</span>
-                <a href="#studio" data-nav="home" class="nav-link hover:text-gray-300 transition-colors">스튜디오</a>
+                <a href="studio.html" data-nav="studio" class="nav-link hover:text-gray-300 transition-colors">스튜디오</a>
                 <span class="nav-dot">·</span>
                 <a href="portfolio.html" data-nav="portfolio" class="nav-link hover:text-gray-300 transition-colors">PORTFOLIO</a>
                 <span class="nav-dot">·</span>
@@ -201,7 +201,7 @@
         <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="fixed inset-0 bg-brand-black flex flex-col items-center justify-center space-y-8 text-xl font-bold tracking-widest opacity-0 pointer-events-none transition-opacity duration-300 z-40">
             <a href="#about" class="hover:text-gray-400" onclick="toggleMobileMenu()">회사소개</a>
-            <a href="#studio" class="hover:text-gray-400" onclick="toggleMobileMenu()">스튜디오</a>
+            <a href="studio.html" onclick="toggleMobileMenu()">스튜디오</a>
             <a href="portfolio.html" class="hover:text-gray-400" onclick="toggleMobileMenu()">PORTFOLIO</a>
             <a href="location.html" class="hover:text-gray-400" onclick="toggleMobileMenu()">오시는길</a>
             <a href="contact.html" class="hover:text-gray-400" onclick="toggleMobileMenu()">CONTACT</a>
@@ -294,9 +294,12 @@
     </section>
 
     <section id="studio" class="py-32 bg-brand-black">
-        <div class="px-6 md:px-12 mb-16 max-w-7xl mx-auto">
-            <h3 class="text-sm tracking-[0.2em] text-gray-500 mb-2">OUR SPACES</h3>
-            <h2 class="text-4xl md:text-5xl font-bold tracking-tight">새로운 스튜디오</h2>
+        <div class="px-6 md:px-12 mb-16 max-w-7xl mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+                <h3 class="text-sm tracking-[0.2em] text-gray-500 mb-2">OUR SPACES</h3>
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight">새로운 스튜디오</h2>
+            </div>
+            <a href="studio.html" class="text-sm text-brand-blue hover:text-white transition-colors tracking-widest uppercase">전체 보기 →</a>
         </div>
 
         <!-- Auto-scroll Gallery -->

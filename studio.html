@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PORTFOLIO | ART CENTER ART HOUSE</title>
+    <title>STUDIO | ART CENTER ART HOUSE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <script>
@@ -11,37 +11,37 @@
             theme: {
                 extend: {
                     fontFamily: { sans: ['Pretendard', 'sans-serif'] },
-                    colors: { brand: { black: '#0a0a0a', dark: '#111111', gray: '#2a2a2a', blue: '#5B7FFF' } }
+                    colors: { brand: { black: '#0a0a0a', blue: '#5B7FFF' } }
                 }
             }
         }
     </script>
     <link rel="stylesheet" href="assets/css/common.css">
-    <link rel="stylesheet" href="assets/css/portfolio.css">
+    <link rel="stylesheet" href="assets/css/studio.css">
 </head>
-<body class="antialiased portfolio-page" data-page="portfolio">
+<body class="antialiased studio-page" data-page="studio">
 
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 px-6 md:px-12 border-b border-gray-200">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 px-6 md:px-12 border-b border-transparent">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <a href="home.html" class="logo-badge z-50">
                 <img src="assets/logo-square.png" alt="ART CENTER ART HOUSE">
             </a>
             <div class="nav-menu hidden md:flex items-center text-sm font-medium tracking-wide">
-                <a href="home.html#about" data-nav="home" class="nav-link hover:text-gray-500 transition-colors">회사소개</a>
+                <a href="home.html#about" data-nav="home" class="nav-link transition-colors">회사소개</a>
                 <span class="nav-dot">·</span>
-                <a href="studio.html" data-nav="studio" class="nav-link hover:text-gray-500 transition-colors">스튜디오</a>
+                <a href="studio.html" data-nav="studio" class="nav-link transition-colors">스튜디오</a>
                 <span class="nav-dot">·</span>
-                <a href="portfolio.html" data-nav="portfolio" class="nav-link hover:text-gray-500 transition-colors">PORTFOLIO</a>
+                <a href="portfolio.html" data-nav="portfolio" class="nav-link transition-colors">PORTFOLIO</a>
                 <span class="nav-dot">·</span>
-                <a href="location.html" data-nav="location" class="nav-link hover:text-gray-500 transition-colors">오시는길</a>
+                <a href="location.html" data-nav="location" class="nav-link transition-colors">오시는길</a>
                 <span class="nav-dot">·</span>
-                <a href="contact.html" data-nav="contact" class="nav-link hover:text-gray-500 transition-colors">CONTACT</a>
+                <a href="contact.html" data-nav="contact" class="nav-link transition-colors">CONTACT</a>
             </div>
-            <button class="md:hidden z-50 focus:outline-none" onclick="toggleMobileMenu()">
+            <button class="md:hidden z-50 text-gray-800 focus:outline-none" onclick="toggleMobileMenu()">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
         </div>
-        <div id="mobile-menu" class="fixed inset-0 bg-white flex flex-col items-center justify-center space-y-8 text-xl font-bold tracking-widest opacity-0 pointer-events-none transition-opacity duration-300 z-40">
+        <div id="mobile-menu" class="fixed inset-0 flex flex-col items-center justify-center space-y-8 text-xl font-bold tracking-widest opacity-0 pointer-events-none transition-opacity duration-300 z-40">
             <a href="home.html#about" onclick="toggleMobileMenu()">회사소개</a>
             <a href="studio.html" onclick="toggleMobileMenu()">스튜디오</a>
             <a href="portfolio.html" onclick="toggleMobileMenu()">PORTFOLIO</a>
@@ -50,32 +50,36 @@
         </div>
     </nav>
 
-    <main class="portfolio-main px-8 md:px-16 lg:px-20">
-        <div class="max-w-[1280px] mx-auto">
-            <div id="portfolio-grid" class="portfolio-grid"></div>
+    <header class="studio-preview-bar">
+        <div class="studio-preview-select-wrap">
+            <select id="studio-hero-select" class="studio-preview-select" aria-label="스튜디오 미리보기"></select>
         </div>
-    </main>
+        <span class="studio-preview-label">studio preview</span>
+    </header>
 
-    <!-- Lightbox Popup -->
-    <div id="portfolio-lightbox" class="portfolio-lightbox" role="dialog" aria-modal="true">
-        <div class="lightbox-inner">
-            <button class="lightbox-close" aria-label="닫기">&times;</button>
-            <p class="lightbox-title"></p>
-            <div class="lightbox-stage">
-                <button class="lightbox-nav lightbox-prev" aria-label="이전">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <img class="lightbox-image" src="" alt="">
-                <button class="lightbox-nav lightbox-next" aria-label="다음">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </button>
-            </div>
-            <p class="lightbox-counter"></p>
-            <div class="lightbox-thumbs"></div>
-        </div>
+    <div class="studio-hero studio-img-wrapper">
+        <img id="studio-hero-img" src="assets/images/aerial-parking.png" alt="Studio preview">
+        <span class="studio-hero-overlay">ART CENTER ART HOUSE</span>
     </div>
 
-    <footer class="bg-[#050505] pt-20 pb-12 px-6 md:px-12 border-t border-gray-900 text-white">
+    <section class="studio-intro">
+        <div class="studio-intro-divider">art center art house commercial art studio</div>
+        <h1 class="studio-intro-title">/ ART CENTER ART HOUSE, 스튜디오</h1>
+        <p class="studio-intro-slogan">imagination,<br>come into existence</p>
+    </section>
+
+    <section class="studio-grid-section">
+        <div id="studio-grid" class="studio-grid"></div>
+    </section>
+
+    <section class="studio-map-section">
+        <div class="studio-map-inner">
+            <div id="studio-filters" class="studio-filters"></div>
+            <div id="studio-branches" class="studio-branches"></div>
+        </div>
+    </section>
+
+    <footer class="studio-page-footer pt-20 pb-12 px-6 md:px-12 border-t border-gray-900">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
             <div class="footer-brand-block">
                 <a href="home.html" class="logo-badge logo-badge--lg inline-flex">
@@ -99,18 +103,10 @@
                 <p class="text-white font-medium mb-3 text-xs tracking-widest">CONTACT</p>
                 <p>T. 010-9252-7825</p>
                 <p>E. arthousea@naver.com</p>
-                <div class="pt-3 flex space-x-5">
-                    <a href="https://www.instagram.com/ilsan_artcenter/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors text-xs tracking-widest">INSTAGRAM</a>
-                    <a href="https://open.kakao.com/me/Ilsanart" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors text-xs tracking-widest">KAKAOTALK</a>
-                </div>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs text-gray-600 border-t border-gray-900 pt-8">
-            <div class="space-y-1">
-                <p>&copy; 2025 (주)일산아트센터 ART CENTER ART HOUSE. All rights reserved.</p>
-                <p>사업자등록번호 470-88-02151 &nbsp;|&nbsp; 대표 장승애</p>
-            </div>
-            <p>25 Years of Excellence</p>
+        <div class="max-w-7xl mx-auto text-xs text-gray-600 border-t border-gray-900 pt-8">
+            <p>&copy; 2025 (주)일산아트센터 ART CENTER ART HOUSE. All rights reserved.</p>
         </div>
     </footer>
 
@@ -125,6 +121,7 @@
     <script src="assets/js/supabase-config.js"></script>
     <script src="assets/js/supabase-client.js"></script>
     <script src="assets/js/common.js"></script>
-    <script src="assets/js/portfolio.js"></script>
+    <script src="assets/js/studio-data.js"></script>
+    <script src="assets/js/studio-page.js"></script>
 </body>
 </html>

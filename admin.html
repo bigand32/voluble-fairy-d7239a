@@ -137,15 +137,47 @@
             <div class="admin-tab-panel admin-hidden" data-tab-panel="studio">
             <div class="admin-card" id="studio-form-card">
                 <h2 id="studio-form-heading">스튜디오 추가</h2>
-                <p class="admin-login-note" style="margin-top:-12px;margin-bottom:20px;">홈 화면 「새로운 스튜디오」 갤러리에 표시됩니다.</p>
+                <p class="admin-login-note" style="margin-top:-12px;margin-bottom:20px;">홈 갤러리 + <a href="studio.html" style="color:#5B7FFF">스튜디오 페이지</a>에 표시됩니다.</p>
                 <form id="studio-form">
                     <div class="admin-field">
                         <label class="admin-label" for="studio-title">이름</label>
                         <input type="text" id="studio-title" class="admin-input" required placeholder="A STAGE">
                     </div>
                     <div class="admin-field">
-                        <label class="admin-label" for="studio-description">설명</label>
+                        <label class="admin-label" for="studio-description">한 줄 설명</label>
                         <input type="text" id="studio-description" class="admin-input" required placeholder="대형 세트 및 복합 촬영을 위한 메인 스튜디오">
+                    </div>
+                    <div class="admin-field">
+                        <label class="admin-label" for="studio-branch">지점</label>
+                        <input type="text" id="studio-branch" class="admin-input" placeholder="일산">
+                    </div>
+                    <div class="admin-field">
+                        <label class="admin-label" for="studio-category">카테고리 (필터)</label>
+                        <input type="text" id="studio-category" class="admin-input" placeholder="뮤직비디오 세트 / 광고 세트">
+                    </div>
+                    <div class="admin-field">
+                        <label class="admin-label" for="studio-address">주소</label>
+                        <input type="text" id="studio-address" class="admin-input" placeholder="경기도 고양시 일산동구 고봉로814번길 50-7">
+                    </div>
+                    <div class="admin-field">
+                        <label class="admin-label" for="studio-area">면적</label>
+                        <input type="text" id="studio-area" class="admin-input" placeholder="약 400평">
+                    </div>
+                    <div class="admin-field">
+                        <label class="admin-label" for="studio-size">사이즈 (mm)</label>
+                        <input type="text" id="studio-size" class="admin-input" placeholder="W28,100 × L48,000 × H14,000">
+                    </div>
+                    <div class="admin-field">
+                        <label class="admin-label" for="studio-power">전력</label>
+                        <input type="text" id="studio-power" class="admin-input" placeholder="400KW">
+                    </div>
+                    <div class="admin-field">
+                        <label class="admin-label" for="studio-facilities">시설</label>
+                        <input type="text" id="studio-facilities" class="admin-input" placeholder="바톤, 대형 냉난방기 완비">
+                    </div>
+                    <div class="admin-field">
+                        <label class="admin-label" for="studio-amenities">편의시설</label>
+                        <textarea id="studio-amenities" class="admin-input" rows="2" placeholder="분장실/샤워실, 화장실, 정수기..."></textarea>
                     </div>
                     <div class="admin-field">
                         <label class="admin-label">사진</label>

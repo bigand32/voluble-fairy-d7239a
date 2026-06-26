@@ -32,6 +32,34 @@
         return Math.floor(Date.now() / 1000) - offset;
     }
 
+    function getFormData() {
+        return {
+            title: document.getElementById('studio-title').value.trim(),
+            description: document.getElementById('studio-description').value.trim(),
+            branch: document.getElementById('studio-branch').value.trim() || null,
+            category: document.getElementById('studio-category').value.trim() || null,
+            address: document.getElementById('studio-address').value.trim() || null,
+            area: document.getElementById('studio-area').value.trim() || null,
+            size_spec: document.getElementById('studio-size').value.trim() || null,
+            power: document.getElementById('studio-power').value.trim() || null,
+            facilities: document.getElementById('studio-facilities').value.trim() || null,
+            amenities: document.getElementById('studio-amenities').value.trim() || null
+        };
+    }
+
+    function fillForm(item) {
+        document.getElementById('studio-title').value = item.title || '';
+        document.getElementById('studio-description').value = item.description || '';
+        document.getElementById('studio-branch').value = item.branch || '';
+        document.getElementById('studio-category').value = item.category || '';
+        document.getElementById('studio-address').value = item.address || '';
+        document.getElementById('studio-area').value = item.area || '';
+        document.getElementById('studio-size').value = item.size_spec || '';
+        document.getElementById('studio-power').value = item.power || '';
+        document.getElementById('studio-facilities').value = item.facilities || '';
+        document.getElementById('studio-amenities').value = item.amenities || '';
+    }
+
     function setEditMode(isEdit) {
         document.getElementById('studio-form-heading').textContent = isEdit ? '스튜디오 수정' : '스튜디오 추가';
         document.getElementById('studio-submit-btn').textContent = isEdit ? '저장하기' : '등록하기';
@@ -163,8 +191,7 @@
         editingId = item.id;
         existingImageUrl = item.image_url;
         pendingImage = null;
-        document.getElementById('studio-title').value = item.title;
-        document.getElementById('studio-description').value = item.description;
+        fillForm(item);
         setEditMode(true);
         renderImagePreview();
         formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -185,10 +212,9 @@
         const sb = getClient();
         if (!sb) return toast('Supabase 설정이 필요합니다.', true);
 
-        const title = document.getElementById('studio-title').value.trim();
-        const description = document.getElementById('studio-description').value.trim();
-        if (!title) return toast('이름을 입력해 주세요.', true);
-        if (!description) return toast('설명을 입력해 주세요.', true);
+        const data = getFormData();
+        if (!data.title) return toast('이름을 입력해 주세요.', true);
+        if (!data.description) return toast('한 줄 설명을 입력해 주세요.', true);
         if (!pendingImage && !existingImageUrl) return toast('사진을 선택해 주세요.', true);
 
         const btn = document.getElementById('studio-submit-btn');
@@ -200,19 +226,15 @@
             let imageUrl = existingImageUrl;
             if (pendingImage) imageUrl = await uploadFile(pendingImage);
 
+            const payload = { ...data, image_url: imageUrl };
+
             if (editingId) {
-                const { error } = await sb.from('studio_items').update({
-                    title,
-                    description,
-                    image_url: imageUrl
-                }).eq('id', editingId);
+                const { error } = await sb.from('studio_items').update(payload).eq('id', editingId);
                 if (error) throw error;
                 toast('스튜디오가 수정되었습니다.');
             } else {
                 const { error } = await sb.from('studio_items').insert({
-                    title,
-                    description,
-                    image_url: imageUrl,
+                    ...payload,
                     sort_order: sortOrderValue()
                 });
                 if (error) throw error;

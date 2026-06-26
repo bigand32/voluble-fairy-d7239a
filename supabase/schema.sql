@@ -170,3 +170,13 @@ create policy "studio_items admin delete"
     on public.studio_items for delete
     to authenticated
     using (true);
+
+-- studio_items 상세 필드 (스튜디오 페이지용)
+alter table public.studio_items add column if not exists branch text;
+alter table public.studio_items add column if not exists category text;
+alter table public.studio_items add column if not exists address text;
+alter table public.studio_items add column if not exists area text;
+alter table public.studio_items add column if not exists size_spec text;
+alter table public.studio_items add column if not exists power text;
+alter table public.studio_items add column if not exists facilities text;
+alter table public.studio_items add column if not exists amenities text;
