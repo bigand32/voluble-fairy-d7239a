@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin | ART CENTER ART HOUSE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Pretendard', 'sans-serif'] },
+                    colors: { brand: { black: '#0a0a0a', dark: '#111111', blue: '#5B7FFF' } }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body class="antialiased admin-page">
+
+    <nav id="navbar" class="fixed w-full z-50 py-6 px-6 md:px-12 border-b border-gray-800 bg-black/95 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="home.html" class="logo-badge z-50">
+                <img src="assets/logo-square.png" alt="ART CENTER ART HOUSE">
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="portfolio.html" class="text-xs text-gray-500 hover:text-white tracking-widest uppercase">포트폴리오 보기</a>
+                <button id="logout-btn" class="admin-btn admin-btn-ghost admin-hidden text-xs py-2 px-4">로그아웃</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-wrap">
+
+        <div id="config-warning" class="admin-card admin-hidden" style="border-color:#7f1d1d;background:#1a0a0a;">
+            <p style="color:#f87171;font-size:14px;margin-bottom:8px;">Supabase 설정이 필요합니다</p>
+            <p style="color:#888;font-size:13px;line-height:1.7;">
+                1. <code style="color:#aaa;">assets/js/supabase-config.example.js</code> 를 <code style="color:#aaa;">supabase-config.js</code> 로 복사<br>
+                2. Supabase URL과 anon key 입력<br>
+                3. <code style="color:#aaa;">supabase/schema.sql</code> 실행<br>
+                4. Authentication에서 관리자 계정 생성
+            </p>
+        </div>
+
+        <!-- Login -->
+        <section id="login-section">
+            <div class="admin-header">
+                <h1>Admin</h1>
+            </div>
+            <div class="admin-card" style="max-width:420px;">
+                <h2>로그인</h2>
+                <form id="login-form">
+                    <div class="admin-field">
+                        <label class="admin-label" for="login-email">이메일</label>
+                        <input type="email" id="login-email" class="admin-input" required placeholder="admin@example.com">
+                    </div>
+                    <div class="admin-field">
+                        <label class="admin-label" for="login-password">비밀번호</label>
+                        <input type="password" id="login-password" class="admin-input" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="admin-btn admin-btn-primary w-full">로그인</button>
+                </form>
+                <p class="admin-login-note">
+                    Supabase Dashboard → Authentication → Users 에서 관리자 계정을 먼저 만들어 주세요.
+                </p>
+            </div>
+        </section>
+
+        <!-- Dashboard -->
+        <section id="dashboard-section" class="admin-hidden">
+            <div class="admin-header">
+                <h1>Admin</h1>
+                <a href="portfolio.html" class="admin-btn admin-btn-ghost">사이트에서 보기</a>
+            </div>
+
+            <div class="admin-tabs">
+                <button type="button" class="admin-tab active" data-tab="portfolio">포트폴리오</button>
+                <button type="button" class="admin-tab" data-tab="inquiries">
+                    문의
+                    <span id="inquiry-badge" class="admin-badge admin-hidden">0</span>
+                </button>
+            </div>
+
+            <div class="admin-tab-panel" data-tab-panel="portfolio">
+            <!-- Add / Edit Form -->
+            <div class="admin-card" id="form-card">
+                <h2 id="form-heading">새 포트폴리오 등록</h2>
+                <form id="add-form">
+                    <div class="admin-field">
+                        <label class="admin-label" for="item-title">제목</label>
+                        <input type="text" id="item-title" class="admin-input" required placeholder="2025.07_차은우 'Sweet Papaya' MV">
+                    </div>
+
+                    <div class="admin-field">
+                        <label class="admin-label">썸네일 (그리드에 표시)</label>
+                        <div class="admin-file-zone" id="thumb-zone">
+                            <input type="file" id="thumb-input" accept="image/*">
+                            <p>클릭 또는 드래그하여 썸네일 업로드</p>
+                        </div>
+                        <div class="admin-preview-grid" id="thumb-preview"></div>
+                    </div>
+
+                    <div class="admin-field">
+                        <label class="admin-label">상세 이미지 (팝업에서 썸네일 다음, 여러 장 가능)</label>
+                        <div class="admin-file-zone" id="images-zone">
+                            <input type="file" id="images-input" accept="image/*" multiple>
+                            <p>클릭 또는 드래그하여 이미지 추가</p>
+                        </div>
+                        <div class="admin-preview-grid" id="images-preview"></div>
+                    </div>
+
+                    <div class="admin-form-actions">
+                        <button type="submit" id="submit-btn" class="admin-btn admin-btn-primary">등록하기</button>
+                        <button type="button" id="cancel-edit-btn" class="admin-btn admin-btn-ghost admin-hidden">취소</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- List -->
+            <div class="admin-card">
+                <h2>등록된 포트폴리오</h2>
+                <div id="portfolio-list">
+                    <div class="admin-loading">불러오는 중...</div>
+                </div>
+            </div>
+            </div>
+
+            <div class="admin-tab-panel admin-hidden" data-tab-panel="inquiries">
+            <div class="admin-card">
+                <div class="admin-inquiry-toolbar">
+                    <h2>문의 접수</h2>
+                    <select id="inquiry-filter" class="admin-input admin-filter-select">
+                        <option value="all">전체</option>
+                        <option value="unread">읽지 않음</option>
+                    </select>
+                </div>
+                <div id="inquiry-list">
+                    <div class="admin-loading">불러오는 중...</div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="admin-toast" class="admin-toast"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/supabase-config.js"></script>
+    <script src="assets/js/supabase-client.js"></script>
+    <script src="assets/js/admin.js"></script>
+    <script src="assets/js/admin-inquiries.js"></script>
+</body>
+</html>
