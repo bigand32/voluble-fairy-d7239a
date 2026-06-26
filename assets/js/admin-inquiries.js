@@ -53,6 +53,7 @@
             panel.classList.toggle('admin-hidden', panel.dataset.tabPanel !== target);
         });
         if (target === 'inquiries') loadInquiries();
+        if (target === 'studio') window.AdminStudio?.loadList();
     }
 
     async function loadUnreadCount() {

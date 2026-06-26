@@ -137,3 +137,36 @@ create policy "contact_inquiries admin delete"
     on public.contact_inquiries for delete
     to authenticated
     using (true);
+
+-- 6. 홈 스튜디오 갤러리
+create table if not exists public.studio_items (
+    id uuid primary key default gen_random_uuid(),
+    title text not null,
+    description text not null,
+    image_url text not null,
+    sort_order bigint not null default 0,
+    created_at timestamptz not null default now()
+);
+
+create index if not exists studio_items_sort_idx on public.studio_items (sort_order asc, created_at asc);
+
+alter table public.studio_items enable row level security;
+
+create policy "studio_items public read"
+    on public.studio_items for select
+    using (true);
+
+create policy "studio_items admin insert"
+    on public.studio_items for insert
+    to authenticated
+    with check (true);
+
+create policy "studio_items admin update"
+    on public.studio_items for update
+    to authenticated
+    using (true);
+
+create policy "studio_items admin delete"
+    on public.studio_items for delete
+    to authenticated
+    using (true);

@@ -83,6 +83,7 @@
 
             <div class="admin-tabs">
                 <button type="button" class="admin-tab active" data-tab="portfolio">포트폴리오</button>
+                <button type="button" class="admin-tab" data-tab="studio">스튜디오</button>
                 <button type="button" class="admin-tab" data-tab="inquiries">
                     문의
                     <span id="inquiry-badge" class="admin-badge admin-hidden">0</span>
@@ -133,6 +134,41 @@
             </div>
             </div>
 
+            <div class="admin-tab-panel admin-hidden" data-tab-panel="studio">
+            <div class="admin-card" id="studio-form-card">
+                <h2 id="studio-form-heading">스튜디오 추가</h2>
+                <p class="admin-login-note" style="margin-top:-12px;margin-bottom:20px;">홈 화면 「새로운 스튜디오」 갤러리에 표시됩니다.</p>
+                <form id="studio-form">
+                    <div class="admin-field">
+                        <label class="admin-label" for="studio-title">이름</label>
+                        <input type="text" id="studio-title" class="admin-input" required placeholder="A STAGE">
+                    </div>
+                    <div class="admin-field">
+                        <label class="admin-label" for="studio-description">설명</label>
+                        <input type="text" id="studio-description" class="admin-input" required placeholder="대형 세트 및 복합 촬영을 위한 메인 스튜디오">
+                    </div>
+                    <div class="admin-field">
+                        <label class="admin-label">사진</label>
+                        <div class="admin-file-zone" id="studio-image-zone">
+                            <input type="file" id="studio-image-input" accept="image/*">
+                            <p>클릭 또는 드래그하여 사진 업로드</p>
+                        </div>
+                        <div class="admin-preview-grid" id="studio-image-preview"></div>
+                    </div>
+                    <div class="admin-form-actions">
+                        <button type="submit" id="studio-submit-btn" class="admin-btn admin-btn-primary">등록하기</button>
+                        <button type="button" id="studio-cancel-edit-btn" class="admin-btn admin-btn-ghost admin-hidden">취소</button>
+                    </div>
+                </form>
+            </div>
+            <div class="admin-card">
+                <h2>등록된 스튜디오</h2>
+                <div id="studio-list">
+                    <div class="admin-loading">불러오는 중...</div>
+                </div>
+            </div>
+            </div>
+
             <div class="admin-tab-panel admin-hidden" data-tab-panel="inquiries">
             <div class="admin-card">
                 <div class="admin-inquiry-toolbar">
@@ -156,6 +192,7 @@
     <script src="assets/js/supabase-config.js"></script>
     <script src="assets/js/supabase-client.js"></script>
     <script src="assets/js/admin-inquiries.js"></script>
+    <script src="assets/js/admin-studio.js"></script>
     <script src="assets/js/admin.js"></script>
 </body>
 </html>

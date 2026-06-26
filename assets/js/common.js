@@ -39,6 +39,25 @@ if (currentPage === 'home') {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link[data-nav="home"]');
 
+    function scrollToSection(hash, behavior) {
+        const target = document.querySelector(hash);
+        if (!target) return false;
+        const top = target.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({ top, behavior: behavior || 'smooth' });
+        return true;
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const hash = link.getAttribute('href');
+            if (!hash || hash === '#') return;
+            if (scrollToSection(hash)) {
+                e.preventDefault();
+                history.pushState(null, '', hash);
+            }
+        });
+    });
+
     function updateActiveNav() {
         let current = '';
         sections.forEach(section => {
@@ -47,13 +66,17 @@ if (currentPage === 'home') {
         });
         navLinks.forEach(link => {
             const href = link.getAttribute('href') || '';
-            const hash = href.includes('#') ? href.split('#')[1] : '';
+            const hash = href.includes('#') ? href.split('#')[1] : href.replace('#', '');
             link.classList.toggle('active', hash === current);
         });
     }
 
     window.addEventListener('scroll', updateActiveNav);
     updateActiveNav();
+
+    if (location.hash) {
+        requestAnimationFrame(() => scrollToSection(location.hash, 'auto'));
+    }
 }
 
 // Contact form → assets/js/contact.js (contact.html)

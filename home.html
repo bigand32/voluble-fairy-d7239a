@@ -179,9 +179,9 @@
 
             <!-- Desktop Menu -->
             <div class="nav-menu hidden md:flex items-center text-sm font-medium tracking-wide">
-                <a href="home.html#about" data-nav="home" class="nav-link hover:text-gray-300 transition-colors">회사소개</a>
+                <a href="#about" data-nav="home" class="nav-link hover:text-gray-300 transition-colors">회사소개</a>
                 <span class="nav-dot">·</span>
-                <a href="home.html#studio" data-nav="home" class="nav-link hover:text-gray-300 transition-colors">스튜디오</a>
+                <a href="#studio" data-nav="home" class="nav-link hover:text-gray-300 transition-colors">스튜디오</a>
                 <span class="nav-dot">·</span>
                 <a href="portfolio.html" data-nav="portfolio" class="nav-link hover:text-gray-300 transition-colors">PORTFOLIO</a>
                 <span class="nav-dot">·</span>
@@ -200,8 +200,8 @@
         
         <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="fixed inset-0 bg-brand-black flex flex-col items-center justify-center space-y-8 text-xl font-bold tracking-widest opacity-0 pointer-events-none transition-opacity duration-300 z-40">
-            <a href="home.html#about" class="hover:text-gray-400" onclick="toggleMobileMenu()">회사소개</a>
-            <a href="home.html#studio" class="hover:text-gray-400" onclick="toggleMobileMenu()">스튜디오</a>
+            <a href="#about" class="hover:text-gray-400" onclick="toggleMobileMenu()">회사소개</a>
+            <a href="#studio" class="hover:text-gray-400" onclick="toggleMobileMenu()">스튜디오</a>
             <a href="portfolio.html" class="hover:text-gray-400" onclick="toggleMobileMenu()">PORTFOLIO</a>
             <a href="location.html" class="hover:text-gray-400" onclick="toggleMobileMenu()">오시는길</a>
             <a href="contact.html" class="hover:text-gray-400" onclick="toggleMobileMenu()">CONTACT</a>
@@ -301,73 +301,7 @@
 
         <!-- Auto-scroll Gallery -->
         <div class="studio-marquee pb-12">
-            <div class="studio-track">
-
-            <div class="studio-card relative group cursor-pointer studio-img-wrapper">
-                <img src="assets/images/aerial-parking.png" alt="A STAGE" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
-                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
-                    <h4 class="text-2xl font-bold mb-2">A STAGE</h4>
-                    <p class="text-gray-300 text-sm">대형 세트 및 복합 촬영을 위한 메인 스튜디오</p>
-                </div>
-            </div>
-
-            <div class="studio-card relative group cursor-pointer studio-img-wrapper">
-                <img src="assets/images/aerial-evening.png" alt="B STAGE" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
-                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
-                    <h4 class="text-2xl font-bold mb-2">B STAGE</h4>
-                    <p class="text-gray-300 text-sm">크로마키 및 버추얼 프로덕션 특화 공간</p>
-                </div>
-            </div>
-
-            <div class="studio-card relative group cursor-pointer studio-img-wrapper">
-                <img src="assets/images/aerial-abc.png" alt="C STAGE" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
-                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
-                    <h4 class="text-2xl font-bold mb-2">C STAGE</h4>
-                    <p class="text-gray-300 text-sm">아티스트 대기실 및 프리미엄 라운지</p>
-                </div>
-            </div>
-
-            <div class="studio-card relative group cursor-pointer studio-img-wrapper">
-                <img src="assets/images/aerial-night.png" alt="야경 전경" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
-                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
-                    <h4 class="text-2xl font-bold mb-2">ART CENTER</h4>
-                    <p class="text-gray-300 text-sm">ART CENTER & ART HOUSE 통합 캠퍼스</p>
-                </div>
-            </div>
-
-            <div class="studio-card relative group cursor-pointer studio-img-wrapper" aria-hidden="true">
-                <img src="assets/images/aerial-parking.png" alt="" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
-                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
-                    <h4 class="text-2xl font-bold mb-2">A STAGE</h4>
-                    <p class="text-gray-300 text-sm">대형 세트 및 복합 촬영을 위한 메인 스튜디오</p>
-                </div>
-            </div>
-
-            <div class="studio-card relative group cursor-pointer studio-img-wrapper" aria-hidden="true">
-                <img src="assets/images/aerial-evening.png" alt="" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
-                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
-                    <h4 class="text-2xl font-bold mb-2">B STAGE</h4>
-                    <p class="text-gray-300 text-sm">크로마키 및 버추얼 프로덕션 특화 공간</p>
-                </div>
-            </div>
-
-            <div class="studio-card relative group cursor-pointer studio-img-wrapper" aria-hidden="true">
-                <img src="assets/images/aerial-abc.png" alt="" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
-                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
-                    <h4 class="text-2xl font-bold mb-2">C STAGE</h4>
-                    <p class="text-gray-300 text-sm">아티스트 대기실 및 프리미엄 라운지</p>
-                </div>
-            </div>
-
-            <div class="studio-card relative group cursor-pointer studio-img-wrapper" aria-hidden="true">
-                <img src="assets/images/aerial-night.png" alt="" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
-                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
-                    <h4 class="text-2xl font-bold mb-2">ART CENTER</h4>
-                    <p class="text-gray-300 text-sm">ART CENTER & ART HOUSE 통합 캠퍼스</p>
-                </div>
-            </div>
-
-            </div>
+            <div class="studio-track" id="studio-track"></div>
         </div>
     </section>
 
@@ -438,7 +372,12 @@
         </div>
     </a>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/supabase-config.js"></script>
+    <script src="assets/js/supabase-client.js"></script>
     <script src="assets/js/common.js"></script>
+    <script src="assets/js/studio-data.js"></script>
+    <script src="assets/js/home-studio.js"></script>
     <script>
         // Initialize GSAP
         document.addEventListener("DOMContentLoaded", (event) => {
