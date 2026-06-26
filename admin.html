@@ -101,6 +101,15 @@
                     </div>
 
                     <div class="admin-field">
+                        <label class="admin-label" for="item-category">카테고리 (스튜디오 페이지 필터)</label>
+                        <select id="item-category" class="admin-input">
+                            <option value="">선택 안 함</option>
+                            <option value="뮤직비디오 세트">뮤직비디오 세트</option>
+                            <option value="광고 세트">광고 세트</option>
+                        </select>
+                    </div>
+
+                    <div class="admin-field">
                         <label class="admin-label">썸네일 (그리드에 표시)</label>
                         <div class="admin-file-zone" id="thumb-zone">
                             <input type="file" id="thumb-input" accept="image/*">
@@ -139,6 +148,10 @@
                 <h2 id="studio-form-heading">스튜디오 추가</h2>
                 <p class="admin-login-note" style="margin-top:-12px;margin-bottom:20px;">홈 갤러리 + <a href="studio.html" style="color:#5B7FFF">스튜디오 페이지</a>에 표시됩니다.</p>
                 <form id="studio-form">
+                    <div class="admin-field">
+                        <label class="admin-label" for="studio-slug">URL (영문, 선택)</label>
+                        <input type="text" id="studio-slug" class="admin-input" placeholder="a-stage → studio-detail.html?page=a-stage">
+                    </div>
                     <div class="admin-field">
                         <label class="admin-label" for="studio-title">이름</label>
                         <input type="text" id="studio-title" class="admin-input" required placeholder="A STAGE">

@@ -287,3 +287,181 @@ body.studio-page #mobile-menu {
     padding: 48px;
     text-align: center;
 }
+
+.studio-spec-card {
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.studio-spec-card:hover .studio-spec-card__badge {
+    background: #5B7FFF;
+}
+
+.studio-portfolio-section {
+    margin-bottom: 48px;
+}
+
+.studio-portfolio-heading {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.studio-slider-wrap {
+    position: relative;
+}
+
+.studio-slider {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 4px 48px 16px;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.studio-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.studio-slider-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex: 0 0 220px;
+    padding: 0;
+    scroll-snap-align: start;
+    text-align: left;
+}
+
+@media (min-width: 768px) {
+    .studio-slider-item { flex-basis: 280px; }
+}
+
+.studio-slider-item img {
+    display: block;
+    height: 160px;
+    object-fit: cover;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .studio-slider-item img { height: 200px; }
+}
+
+.studio-slider-item span {
+    color: #333;
+    display: block;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-top: 10px;
+}
+
+.studio-slider-btn {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    color: #333;
+    cursor: pointer;
+    height: 40px;
+    position: absolute;
+    top: 80px;
+    transform: translateY(-50%);
+    width: 40px;
+    z-index: 2;
+}
+
+.studio-slider-btn:hover {
+    border-color: #111;
+}
+
+.studio-slider-btn.prev { left: 0; }
+.studio-slider-btn.next { right: 0; }
+
+.studio-slider-empty {
+    color: #888;
+    font-size: 13px;
+    padding: 24px;
+    text-align: center;
+}
+
+/* Detail page */
+.studio-detail-lead {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.8;
+    margin: 24px 0 32px;
+    max-width: 720px;
+}
+
+.studio-detail-back {
+    color: #5B7FFF;
+    display: inline-block;
+    font-size: 13px;
+    margin-bottom: 24px;
+    text-decoration: none;
+}
+
+.studio-detail-back:hover {
+    text-decoration: underline;
+}
+
+.studio-detail-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.studio-detail-title em {
+    color: #5B7FFF;
+    font-style: normal;
+}
+
+.studio-lightbox {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.92);
+    display: none;
+    inset: 0;
+    justify-content: center;
+    position: fixed;
+    z-index: 99999;
+}
+
+.studio-lightbox.open {
+    display: flex;
+}
+
+.studio-lightbox img {
+    max-height: 85vh;
+    max-width: 90vw;
+    object-fit: contain;
+}
+
+.studio-lightbox-close {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 32px;
+    position: absolute;
+    right: 24px;
+    top: 24px;
+}
+
+.studio-lightbox-title {
+    bottom: 32px;
+    color: #fff;
+    font-size: 14px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+}
+

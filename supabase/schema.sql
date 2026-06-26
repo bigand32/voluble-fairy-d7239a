@@ -180,3 +180,8 @@ alter table public.studio_items add column if not exists size_spec text;
 alter table public.studio_items add column if not exists power text;
 alter table public.studio_items add column if not exists facilities text;
 alter table public.studio_items add column if not exists amenities text;
+alter table public.studio_items add column if not exists slug text;
+
+create unique index if not exists studio_items_slug_idx on public.studio_items (slug) where slug is not null;
+
+alter table public.portfolio_items add column if not exists category text;

@@ -1,5 +1,6 @@
 const STUDIO_ITEMS = [
     {
+        slug: 'a-stage',
         title: 'A STAGE',
         description: '대형 세트 및 복합 촬영을 위한 메인 스튜디오',
         image_url: 'assets/images/aerial-parking.png',
@@ -13,6 +14,7 @@ const STUDIO_ITEMS = [
         amenities: '분장실/샤워실, 화장실, 정수기, 냉장고, 전자레인지, 와이파이'
     },
     {
+        slug: 'b-stage',
         title: 'B STAGE',
         description: '크로마키 및 버추얼 프로덕션 특화 공간',
         image_url: 'assets/images/aerial-evening.png',
@@ -26,6 +28,7 @@ const STUDIO_ITEMS = [
         amenities: '분장실, 화장실, 정수기, 냉장고, 와이파이'
     },
     {
+        slug: 'c-stage',
         title: 'C STAGE',
         description: '아티스트 대기실 및 프리미엄 라운지',
         image_url: 'assets/images/aerial-abc.png',
@@ -39,6 +42,7 @@ const STUDIO_ITEMS = [
         amenities: '대기실, 샤워실, 화장실, 정수기, 와이파이'
     },
     {
+        slug: 'art-center',
         title: 'ART CENTER',
         description: 'ART CENTER & ART HOUSE 통합 캠퍼스',
         image_url: 'assets/images/aerial-night.png',

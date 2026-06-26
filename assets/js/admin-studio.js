@@ -32,9 +32,16 @@
         return Math.floor(Date.now() / 1000) - offset;
     }
 
+    function makeSlug(title) {
+        return String(title || '').toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    }
+
     function getFormData() {
+        const title = document.getElementById('studio-title').value.trim();
+        const slugInput = document.getElementById('studio-slug').value.trim();
         return {
-            title: document.getElementById('studio-title').value.trim(),
+            title,
+            slug: slugInput || makeSlug(title) || null,
             description: document.getElementById('studio-description').value.trim(),
             branch: document.getElementById('studio-branch').value.trim() || null,
             category: document.getElementById('studio-category').value.trim() || null,
@@ -48,6 +55,7 @@
     }
 
     function fillForm(item) {
+        document.getElementById('studio-slug').value = item.slug || '';
         document.getElementById('studio-title').value = item.title || '';
         document.getElementById('studio-description').value = item.description || '';
         document.getElementById('studio-branch').value = item.branch || '';

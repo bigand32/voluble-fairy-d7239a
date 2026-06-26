@@ -246,6 +246,7 @@
         const { data: item, error: itemErr } = await sb.from('portfolio_items').insert({
             title,
             thumb_url: thumbUrl,
+            category: document.getElementById('item-category').value || null,
             sort_order: sortOrderValue()
         }).select().single();
 
@@ -274,7 +275,8 @@
 
         const { error: itemErr } = await sb.from('portfolio_items').update({
             title,
-            thumb_url: thumbUrl
+            thumb_url: thumbUrl,
+            category: document.getElementById('item-category').value || null
         }).eq('id', editingId);
 
         if (itemErr) throw itemErr;
@@ -326,6 +328,7 @@
         pendingImages = [];
 
         document.getElementById('item-title').value = item.title;
+        document.getElementById('item-category').value = item.category || '';
         setEditMode(true);
         renderPreviews();
         formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -348,21 +351,18 @@
             return;
         }
 
-        portfolioList.innerHTML = `<div class="admin-list">${items.map(item => {
-            const detailCount = (item.portfolio_images || []).length;
-            return `
+        portfolioList.innerHTML = `<div class="admin-list">${items.map(item => `
             <div class="admin-list-item" data-id="${item.id}">
                 <img src="${item.thumb_url}" alt="">
                 <div class="info">
                     <p class="title">${escapeHtml(item.title)}</p>
-                    <p class="meta">팝업 ${detailCount + 1}장 (썸네일 + 상세 ${detailCount}장)</p>
+                    <p class="meta">${escapeHtml(item.category || '카테고리 없음')} · 이미지 ${(item.portfolio_images || []).length}장</p>
                 </div>
                 <div class="actions">
                     <button type="button" class="admin-btn admin-btn-ghost admin-btn-sm" data-edit="${item.id}">수정</button>
                     <button type="button" class="admin-btn admin-btn-danger" data-delete="${item.id}">삭제</button>
                 </div>
-            </div>`;
-        }).join('')}</div>`;
+            </div>`).join('')}</div>`;
 
         portfolioList.querySelectorAll('[data-edit]').forEach(btn => {
             btn.addEventListener('click', () => openEdit(btn.dataset.edit));
