@@ -1,6 +1,6 @@
 (function () {
     const heroImg = document.getElementById('studio-hero-img');
-    const heroSelect = document.getElementById('studio-hero-select');
+    const pickerList = document.getElementById('studio-picker-list');
     const gridEl = document.getElementById('studio-grid');
     const filtersEl = document.getElementById('studio-filters');
     const branchesEl = document.getElementById('studio-branches');
@@ -15,7 +15,6 @@
     let portfolioItems = [];
     let activeFilter = 'all';
     let previewIndex = 0;
-    let selectReady = false;
 
     function escapeHtml(str) {
         const div = document.createElement('div');
@@ -100,21 +99,22 @@
             heroImg.src = item.image_url;
             heroImg.alt = item.title;
         }
-        if (heroSelect) heroSelect.value = String(previewIndex);
+        renderStudioPicker();
     }
 
-    function renderPreviewSelect() {
-        if (!heroSelect) return;
-        heroSelect.innerHTML = items.map((item, i) =>
-            `<option value="${i}">${escapeHtml(item.title)}</option>`
-        ).join('');
-        if (!selectReady) {
-            selectReady = true;
-            heroSelect.addEventListener('change', () => {
-                const idx = Number(heroSelect.value);
-                location.href = studioUrl(items[idx]);
+    function renderStudioPicker() {
+        if (!pickerList) return;
+        pickerList.innerHTML = items.map((item, i) => `
+            <li>
+                <button type="button" class="studio-picker-item${i === previewIndex ? ' is-active' : ''}" data-idx="${i}">${escapeHtml(item.title)}</button>
+            </li>
+        `).join('');
+        pickerList.querySelectorAll('.studio-picker-item').forEach(btn => {
+            btn.addEventListener('click', () => {
+                updatePreview(Number(btn.dataset.idx));
+                document.getElementById(`studio-card-${btn.dataset.idx}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
             });
-        }
+        });
     }
 
     function specRow(label, value) {
@@ -250,7 +250,6 @@
 
     async function init() {
         items = getFallback().map(normalizeStudio);
-        renderPreviewSelect();
         updatePreview(0);
         renderGrid();
         renderFilters();
@@ -266,7 +265,6 @@
 
         if (remoteStudios?.length) {
             items = remoteStudios;
-            renderPreviewSelect();
             updatePreview(0);
             renderGrid();
             renderBranches();

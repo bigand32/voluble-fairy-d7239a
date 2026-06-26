@@ -3,7 +3,7 @@
     const pageKey = params.get('page') || params.get('id');
 
     const heroImg = document.getElementById('detail-hero-img');
-    const heroSelect = document.getElementById('detail-studio-select');
+    const pickerList = document.getElementById('studio-picker-list');
     const titleEl = document.getElementById('detail-title');
     const leadEl = document.getElementById('detail-lead');
     const specsEl = document.getElementById('detail-specs');
@@ -14,7 +14,6 @@
     }
 
     let items = [];
-    let selectReady = false;
 
     function escapeHtml(str) {
         const div = document.createElement('div');
@@ -109,20 +108,17 @@
                 ${specRow('편의시설', item.amenities)}
             `;
         }
-        if (heroSelect) heroSelect.value = itemKey(item);
+        renderStudioPicker(item);
     }
 
-    function renderSelect() {
-        if (!heroSelect) return;
-        heroSelect.innerHTML = items.map(item =>
-            `<option value="${escapeHtml(itemKey(item))}">${escapeHtml(item.title)}</option>`
-        ).join('');
-        if (!selectReady) {
-            selectReady = true;
-            heroSelect.addEventListener('change', () => {
-                location.href = studioUrl(findItem(heroSelect.value));
-            });
-        }
+    function renderStudioPicker(current) {
+        if (!pickerList) return;
+        const activeKey = itemKey(current);
+        pickerList.innerHTML = items.map(item => `
+            <li>
+                <a href="${studioUrl(item)}" class="studio-picker-item${itemKey(item) === activeKey ? ' is-active' : ''}">${escapeHtml(item.title)}</a>
+            </li>
+        `).join('');
     }
 
     async function init() {
@@ -140,7 +136,6 @@
             return;
         }
 
-        renderSelect();
         renderDetail(current);
     }
 
