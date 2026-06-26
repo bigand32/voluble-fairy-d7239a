@@ -39,10 +39,14 @@
         <div id="config-warning" class="admin-card admin-hidden" style="border-color:#7f1d1d;background:#1a0a0a;">
             <p style="color:#f87171;font-size:14px;margin-bottom:8px;">Supabase 설정이 필요합니다</p>
             <p style="color:#888;font-size:13px;line-height:1.7;">
-                1. <code style="color:#aaa;">assets/js/supabase-config.example.js</code> 를 <code style="color:#aaa;">supabase-config.js</code> 로 복사<br>
-                2. Supabase URL과 anon key 입력<br>
-                3. <code style="color:#aaa;">supabase/schema.sql</code> 실행<br>
-                4. Authentication에서 관리자 계정 생성
+                <strong style="color:#ccc;">Netlify 배포 사이트</strong><br>
+                Netlify → Site settings → Environment variables 에 추가 후 재배포:<br>
+                · <code style="color:#aaa;">SUPABASE_URL</code><br>
+                · <code style="color:#aaa;">SUPABASE_ANON_KEY</code><br><br>
+                <strong style="color:#ccc;">로컬 개발</strong><br>
+                1. <code style="color:#aaa;">supabase-config.example.js</code> → <code style="color:#aaa;">supabase-config.js</code> 복사 후 키 입력<br>
+                2. Supabase SQL Editor에서 <code style="color:#aaa;">supabase/schema.sql</code> 실행<br>
+                3. Authentication → Users → <strong>Add user</strong> 로 Admin 로그인용 이메일·비밀번호 생성
             </p>
         </div>
 
