@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ART CENTER ART HOUSE | Build for Impossible</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Pretendard Font (Sleek Korean Typography) -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="assets/css/common.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#0a0a0a',
+                            dark: '#111111',
+                            gray: '#2a2a2a',
+                            light: '#e5e5e5',
+                            blue: '#5B7FFF'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .clip-text {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        .text-reveal-inner {
+            transform: translateY(100%);
+            display: inline-block;
+        }
+
+        .hero-bg {
+            background-image: linear-gradient(rgba(10, 10, 10, 0.35), rgba(10, 10, 10, 0.75)), url('assets/images/hero-exterior.png');
+            background-size: cover;
+            background-position: center 40%;
+            background-attachment: fixed;
+        }
+
+        .about-banner img,
+        .studio-img {
+            object-position: center;
+        }
+
+        .cta-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-bg {
+            background-image: url('assets/images/aerial-night.png');
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+        }
+
+        .cta-glow {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(91, 127, 255, 0.25) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: cta-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes cta-pulse {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.15); }
+        }
+
+        .cta-label {
+            letter-spacing: 0.35em;
+        }
+
+        .cta-line {
+            display: block;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .cta-btn {
+            display: inline-block;
+            margin-top: 48px;
+            padding: 18px 56px;
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            box-shadow: none;
+        }
+
+        .cta-btn:hover {
+            background: transparent;
+            border-color: #fff;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: none;
+        }
+
+        .cta-divider {
+            width: 48px;
+            height: 2px;
+            background: #5B7FFF;
+            margin: 0 auto 32px;
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .studio-marquee {
+            overflow: hidden;
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        }
+
+        .studio-track {
+            display: flex;
+            gap: 24px;
+            width: max-content;
+            padding-left: 24px;
+            animation: studio-scroll 50s linear infinite;
+            will-change: transform;
+        }
+
+        .studio-marquee:hover .studio-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes studio-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .studio-card {
+            min-width: 85vw;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .studio-card { min-width: 600px; }
+            .studio-track { gap: 24px; padding-left: 48px; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-white selection:text-black" data-page="home">
+
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 px-6 md:px-12 border-b border-transparent">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="home.html" class="logo-badge z-50">
+                <img src="assets/logo-square.png" alt="ART CENTER ART HOUSE">
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="nav-menu hidden md:flex items-center text-sm font-medium tracking-wide">
+                <a href="home.html#about" data-nav="home" class="nav-link hover:text-gray-300 transition-colors">회사소개</a>
+                <span class="nav-dot">·</span>
+                <a href="home.html#studio" data-nav="home" class="nav-link hover:text-gray-300 transition-colors">스튜디오</a>
+                <span class="nav-dot">·</span>
+                <a href="portfolio.html" data-nav="portfolio" class="nav-link hover:text-gray-300 transition-colors">PORTFOLIO</a>
+                <span class="nav-dot">·</span>
+                <a href="location.html" data-nav="location" class="nav-link hover:text-gray-300 transition-colors">오시는길</a>
+                <span class="nav-dot">·</span>
+                <a href="contact.html" data-nav="contact" class="nav-link hover:text-gray-300 transition-colors">CONTACT</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden z-50 text-white focus:outline-none" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="fixed inset-0 bg-brand-black flex flex-col items-center justify-center space-y-8 text-xl font-bold tracking-widest opacity-0 pointer-events-none transition-opacity duration-300 z-40">
+            <a href="home.html#about" class="hover:text-gray-400" onclick="toggleMobileMenu()">회사소개</a>
+            <a href="home.html#studio" class="hover:text-gray-400" onclick="toggleMobileMenu()">스튜디오</a>
+            <a href="portfolio.html" class="hover:text-gray-400" onclick="toggleMobileMenu()">PORTFOLIO</a>
+            <a href="location.html" class="hover:text-gray-400" onclick="toggleMobileMenu()">오시는길</a>
+            <a href="contact.html" class="hover:text-gray-400" onclick="toggleMobileMenu()">CONTACT</a>
+        </div>
+    </nav>
+
+    <section class="hero-bg h-screen relative flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        
+        <div class="relative z-10 text-center px-4 mt-20">
+            <p id="hero-subtitle" class="text-sm md:text-lg tracking-[0.3em] text-gray-300 mb-6 font-light opacity-0 translate-y-10">불가능한 것을 짓는다</p>
+            <h1 id="hero-title" class="text-5xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-none opacity-0 translate-y-10">
+                Build For<br/>Impossible
+            </h1>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute -bottom-32 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce opacity-50">
+                <span class="text-xs tracking-widest mb-2">SCROLL</span>
+                <div class="w-[1px] h-12 bg-white"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-32 md:py-48 px-6 md:px-12 bg-brand-black relative">
+        <div class="max-w-4xl mx-auto text-center md:text-left space-y-16 md:space-y-24">
+            
+            <!-- Intro Paragraph -->
+            <div class="scroll-text-block">
+                <p class="text-xl md:text-3xl lg:text-4xl leading-relaxed md:leading-snug font-light text-gray-300">
+                    <span class="text-white font-medium">2001년 개업 이래,</span><br class="hidden md:block"/>
+                    저희는 올해로 25년의 시간을 걸어왔습니다.
+                </p>
+            </div>
+
+            <div class="scroll-text-block">
+                <p class="text-lg md:text-2xl leading-loose font-light text-gray-400">
+                    그동안 수많은 기업과 아티스트들과 함께하며<br class="hidden md:block"/>
+                    다양한 프로젝트를 완성해왔고,<br class="hidden md:block"/>
+                    그 과정 속에서 현장에서만 쌓을 수 있는 노하우와 기술력,<br class="hidden md:block"/>
+                    그리고 완성도에 대한 기준을 만들어왔습니다.
+                </p>
+            </div>
+
+            <div class="scroll-text-block border-l-2 border-gray-800 pl-6 md:pl-10">
+                <p class="text-xl md:text-3xl leading-relaxed font-medium text-white">
+                    이제 저희는 <span class="text-gray-400">새로운 공간, 새로운 스튜디오,</span><br class="hidden md:block"/>
+                    그리고 <span class="text-gray-400">새로운 이름</span>으로<br class="hidden md:block"/>
+                    또 한 번의 시작을 준비합니다.
+                </p>
+            </div>
+            
+            <div class="scroll-text-block">
+                <p class="text-lg md:text-xl leading-loose font-light text-gray-400">
+                    지난 시간 동안의 경험을 바탕으로 부족했던 부분은 더욱 세심하게 보완하고,<br class="hidden md:block"/>
+                    우리가 가진 강점은 더욱 단단하게 발전시켜<br class="hidden md:block"/>
+                    더 높은 완성도의 공간과 결과물로 찾아뵙고자 합니다.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="about-banner studio-img-wrapper">
+        <img src="assets/images/aerial-abc.png" alt="ART CENTER ART HOUSE 전경" class="w-full h-[280px] md:h-[420px] object-cover studio-img">
+    </div>
+
+    <section id="philosophy" class="py-32 px-6 md:px-12 bg-brand-dark">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
+            <!-- Left: Large Typography -->
+            <div class="w-full md:w-1/2 phil-text">
+                <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-8 leading-tight">
+                    Build for<br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-600">Impossible</span>
+                </h2>
+                <div class="w-16 h-1 bg-white mb-8"></div>
+                <p class="text-lg md:text-xl font-light leading-relaxed text-gray-300 mb-6">
+                    불가능해 보이는 것을 짓는다는 뜻입니다.
+                </p>
+                <p class="text-base md:text-lg font-light leading-relaxed text-gray-400">
+                    상상에 머물던 것을 현실로 만들고, 어렵다고 여겨졌던 것을 가능하게 만드는 것. 
+                    그것이 저희가 걸어온 길이자, 앞으로도 지켜갈 방향입니다.
+                </p>
+            </div>
+            
+            <!-- Right: Atmospheric Image -->
+            <div class="w-full md:w-1/2 phil-image studio-img-wrapper rounded-sm">
+                <img src="assets/images/aerial-highway.png" alt="ART CENTER ART HOUSE 항공 전경" class="w-full h-[600px] object-cover studio-img transition-all duration-700">
+            </div>
+        </div>
+    </section>
+
+    <section id="studio" class="py-32 bg-brand-black">
+        <div class="px-6 md:px-12 mb-16 max-w-7xl mx-auto">
+            <h3 class="text-sm tracking-[0.2em] text-gray-500 mb-2">OUR SPACES</h3>
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tight">새로운 스튜디오</h2>
+        </div>
+
+        <!-- Auto-scroll Gallery -->
+        <div class="studio-marquee pb-12">
+            <div class="studio-track">
+
+            <div class="studio-card relative group cursor-pointer studio-img-wrapper">
+                <img src="assets/images/aerial-parking.png" alt="A STAGE" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
+                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
+                    <h4 class="text-2xl font-bold mb-2">A STAGE</h4>
+                    <p class="text-gray-300 text-sm">대형 세트 및 복합 촬영을 위한 메인 스튜디오</p>
+                </div>
+            </div>
+
+            <div class="studio-card relative group cursor-pointer studio-img-wrapper">
+                <img src="assets/images/aerial-evening.png" alt="B STAGE" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
+                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
+                    <h4 class="text-2xl font-bold mb-2">B STAGE</h4>
+                    <p class="text-gray-300 text-sm">크로마키 및 버추얼 프로덕션 특화 공간</p>
+                </div>
+            </div>
+
+            <div class="studio-card relative group cursor-pointer studio-img-wrapper">
+                <img src="assets/images/aerial-abc.png" alt="C STAGE" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
+                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
+                    <h4 class="text-2xl font-bold mb-2">C STAGE</h4>
+                    <p class="text-gray-300 text-sm">아티스트 대기실 및 프리미엄 라운지</p>
+                </div>
+            </div>
+
+            <div class="studio-card relative group cursor-pointer studio-img-wrapper">
+                <img src="assets/images/aerial-night.png" alt="야경 전경" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
+                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
+                    <h4 class="text-2xl font-bold mb-2">ART CENTER</h4>
+                    <p class="text-gray-300 text-sm">ART CENTER & ART HOUSE 통합 캠퍼스</p>
+                </div>
+            </div>
+
+            <div class="studio-card relative group cursor-pointer studio-img-wrapper" aria-hidden="true">
+                <img src="assets/images/aerial-parking.png" alt="" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
+                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
+                    <h4 class="text-2xl font-bold mb-2">A STAGE</h4>
+                    <p class="text-gray-300 text-sm">대형 세트 및 복합 촬영을 위한 메인 스튜디오</p>
+                </div>
+            </div>
+
+            <div class="studio-card relative group cursor-pointer studio-img-wrapper" aria-hidden="true">
+                <img src="assets/images/aerial-evening.png" alt="" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
+                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
+                    <h4 class="text-2xl font-bold mb-2">B STAGE</h4>
+                    <p class="text-gray-300 text-sm">크로마키 및 버추얼 프로덕션 특화 공간</p>
+                </div>
+            </div>
+
+            <div class="studio-card relative group cursor-pointer studio-img-wrapper" aria-hidden="true">
+                <img src="assets/images/aerial-abc.png" alt="" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
+                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
+                    <h4 class="text-2xl font-bold mb-2">C STAGE</h4>
+                    <p class="text-gray-300 text-sm">아티스트 대기실 및 프리미엄 라운지</p>
+                </div>
+            </div>
+
+            <div class="studio-card relative group cursor-pointer studio-img-wrapper" aria-hidden="true">
+                <img src="assets/images/aerial-night.png" alt="" class="w-full h-[400px] md:h-[600px] object-cover studio-img brightness-90 group-hover:brightness-100">
+                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/80 to-transparent w-full">
+                    <h4 class="text-2xl font-bold mb-2">ART CENTER</h4>
+                    <p class="text-gray-300 text-sm">ART CENTER & ART HOUSE 통합 캠퍼스</p>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section relative overflow-hidden">
+        <div class="cta-bg absolute inset-0 scale-110"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90"></div>
+        <div class="cta-glow absolute pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-6 py-32 text-center">
+            <p class="cta-label text-xs md:text-sm text-brand-blue mb-6 font-medium tracking-widest">BUILD FOR IMPOSSIBLE</p>
+            <div class="cta-divider"></div>
+            <h2 class="text-2xl md:text-4xl lg:text-5xl font-light leading-relaxed md:leading-snug text-gray-200">
+                <span class="cta-line">새로운 시작과 함께,</span>
+                <span class="cta-line">더 깊어진 경험과 더 강해진 실력으로</span>
+                <span class="cta-line text-white font-medium">여러분의 상상을 현실로 짓겠습니다.</span>
+            </h2>
+            <a href="contact.html" class="cta-btn">문의하기</a>
+        </div>
+    </section>
+
+    <footer class="bg-[#050505] pt-20 pb-12 px-6 md:px-12 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+            <div class="footer-brand-block">
+                <a href="home.html" class="logo-badge logo-badge--lg inline-flex">
+                    <img src="assets/logo-square.png" alt="ART CENTER ART HOUSE">
+                </a>
+                <div class="footer-brand-text">
+                    <div class="footer-brand-lines">
+                        <span><span class="brand-a">A</span>RT CENTER</span>
+                        <span class="footer-brand-amp">&</span>
+                        <span><span class="brand-a">A</span>RT HOUSE</span>
+                    </div>
+                    <p class="footer-brand-tagline">BUILD FOR IMPOSSIBLE</p>
+                </div>
+            </div>
+            
+            <div class="text-gray-400 font-light text-sm space-y-2">
+                <p class="text-white font-medium mb-3 text-xs tracking-widest">ADDRESS</p>
+                <p>경기도 고양시 일산동구 설문동 546-28</p>
+                <p>경기도 고양시 일산동구 고봉로814번길 50-7</p>
+            </div>
+
+            <div class="text-gray-400 font-light text-sm space-y-2">
+                <p class="text-white font-medium mb-3 text-xs tracking-widest">CONTACT</p>
+                <p>T. 010-9252-7825</p>
+                <p>E. arthousea@naver.com</p>
+                <div class="pt-3 flex space-x-5">
+                    <a href="https://www.instagram.com/ilsan_artcenter/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors text-xs tracking-widest">INSTAGRAM</a>
+                    <a href="https://open.kakao.com/me/Ilsanart" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors text-xs tracking-widest">KAKAOTALK</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs text-gray-600 border-t border-gray-900 pt-8">
+            <div class="space-y-1">
+                <p>&copy; 2025 (주)일산아트센터 ART CENTER ART HOUSE. All rights reserved.</p>
+                <p>사업자등록번호 470-88-02151 &nbsp;|&nbsp; 대표 장승애</p>
+            </div>
+            <p class="md:mt-0">25 Years of Excellence</p>
+        </div>
+    </footer>
+
+    <!-- KakaoTalk Floating Button -->
+    <a href="https://open.kakao.com/me/Ilsanart" target="_blank" rel="noopener noreferrer" class="kakao-float" aria-label="카카오톡 문의">
+        <span class="kakao-float-label">카카오톡 문의</span>
+        <div class="kakao-float-btn">
+            <svg viewBox="0 0 24 24" fill="#3C1E1E"><path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.76 1.828 5.19 4.594 6.57-.188.69-.682 2.51-.782 2.88-.122.47.172.463.362.337.15-.1 2.406-1.634 3.388-2.296.432.06.876.09 1.338.09 5.523 0 10-3.477 10-7.8S17.523 3 12 3z"/></svg>
+        </div>
+    </a>
+
+    <script src="assets/js/common.js"></script>
+    <script>
+        // Initialize GSAP
+        document.addEventListener("DOMContentLoaded", (event) => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 1. Hero Animation (Load)
+            const heroTl = gsap.timeline();
+            heroTl.to("#hero-subtitle", { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.2 })
+                  .to("#hero-title", { y: 0, opacity: 1, duration: 1.2, ease: "power4.out" }, "-=0.6");
+
+            // 2. About Text Scroll Animation (Fade up sequentially as you scroll)
+            const textBlocks = gsap.utils.toArray('.scroll-text-block');
+            textBlocks.forEach((block) => {
+                gsap.fromTo(block, 
+                    { y: 50, opacity: 0 },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 1.2,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: block,
+                            start: "top 85%", // Starts animation when top of block hits 85% of viewport height
+                            toggleActions: "play none none reverse" // Reverses when scrolling back up
+                        }
+                    }
+                );
+            });
+
+            // 3. Philosophy Section Animation
+            gsap.fromTo('.phil-text',
+                { x: -50, opacity: 0 },
+                {
+                    x: 0, opacity: 1, duration: 1.2, ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: '#philosophy',
+                        start: "top 70%",
+                    }
+                }
+            );
+            
+            gsap.fromTo('.phil-image',
+                { x: 50, opacity: 0 },
+                {
+                    x: 0, opacity: 1, duration: 1.2, ease: "power3.out", delay: 0.3,
+                    scrollTrigger: {
+                        trigger: '#philosophy',
+                        start: "top 70%",
+                    }
+                }
+            );
+
+            // 4. Parallax effect for Hero Background
+            gsap.to(".hero-bg", {
+                backgroundPosition: "50% 100%",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".hero-bg",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+
+            // 5. CTA Section Animation
+            const ctaTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '#cta',
+                    start: 'top 75%',
+                }
+            });
+
+            ctaTl.to('.cta-divider', {
+                opacity: 1,
+                scaleX: 1,
+                duration: 0.8,
+                ease: 'power3.out'
+            })
+            .to('.cta-line', {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.2,
+                ease: 'power3.out'
+            }, '-=0.4')
+            .to('.cta-btn', {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: 'power3.out'
+            }, '-=0.3');
+
+            gsap.to('.cta-bg', {
+                y: -80,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '#cta',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+        });
+    </script>
+</body>
+</html>
