@@ -1,12 +1,14 @@
 (function () {
-    const sb = window.supabaseClient;
     const listEl = document.getElementById('inquiry-list');
     const badgeEl = document.getElementById('inquiry-badge');
     const filterEl = document.getElementById('inquiry-filter');
-    if (!listEl) return;
 
     let filter = 'all';
     let tabsReady = false;
+
+    function getClient() {
+        return window.supabaseClient;
+    }
 
     function escapeHtml(str) {
         const div = document.createElement('div');
@@ -43,7 +45,18 @@
         }
     }
 
+    function switchTab(target) {
+        document.querySelectorAll('.admin-tab').forEach(t => {
+            t.classList.toggle('active', t.dataset.tab === target);
+        });
+        document.querySelectorAll('.admin-tab-panel').forEach(panel => {
+            panel.classList.toggle('admin-hidden', panel.dataset.tabPanel !== target);
+        });
+        if (target === 'inquiries') loadInquiries();
+    }
+
     async function loadUnreadCount() {
+        const sb = getClient();
         if (!sb) return;
         const { count, error } = await sb
             .from('contact_inquiries')
@@ -53,7 +66,14 @@
     }
 
     async function loadInquiries() {
-        if (!sb) return;
+        if (!listEl) return;
+
+        const sb = getClient();
+        if (!sb) {
+            listEl.innerHTML = '<div class="admin-empty">Supabase 설정 후 문의를 확인할 수 있습니다.</div>';
+            return;
+        }
+
         listEl.innerHTML = '<div class="admin-loading">불러오는 중...</div>';
 
         let query = sb
@@ -108,6 +128,8 @@
     }
 
     async function markRead(id) {
+        const sb = getClient();
+        if (!sb) return;
         const { error } = await sb.from('contact_inquiries').update({ is_read: true }).eq('id', id);
         if (error) return toast(error.message, true);
         toast('읽음 처리했습니다.');
@@ -115,6 +137,8 @@
     }
 
     async function deleteInquiry(id) {
+        const sb = getClient();
+        if (!sb) return;
         if (!confirm('이 문의를 삭제할까요?')) return;
         const { error } = await sb.from('contact_inquiries').delete().eq('id', id);
         if (error) return toast(error.message, true);
@@ -124,17 +148,14 @@
 
     function setupTabs() {
         if (tabsReady) return;
+        const tabsRoot = document.querySelector('.admin-tabs');
+        if (!tabsRoot) return;
         tabsReady = true;
 
-        document.querySelectorAll('.admin-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                const target = tab.dataset.tab;
-                document.querySelectorAll('.admin-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === target));
-                document.querySelectorAll('.admin-tab-panel').forEach(panel => {
-                    panel.classList.toggle('admin-hidden', panel.dataset.tabPanel !== target);
-                });
-                if (target === 'inquiries') loadInquiries();
-            });
+        tabsRoot.addEventListener('click', (e) => {
+            const tab = e.target.closest('.admin-tab');
+            if (!tab?.dataset.tab) return;
+            switchTab(tab.dataset.tab);
         });
 
         filterEl?.addEventListener('change', () => {
@@ -143,11 +164,13 @@
         });
     }
 
+    setupTabs();
+
     window.AdminInquiries = {
         onLogin() {
-            setupTabs();
             loadUnreadCount();
         },
-        loadList: loadInquiries
+        loadList: loadInquiries,
+        switchTab
     };
 })();
