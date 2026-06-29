@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="assets/css/studio.css">
 </head>
-<body class="antialiased studio-page" data-page="studio">
+<body class="antialiased studio-page studio-detail-page" data-page="studio">
 
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 px-6 md:px-12 border-b border-transparent">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
@@ -40,26 +40,56 @@
         </div>
     </nav>
 
-    <header class="studio-preview-bar">
-        <div class="studio-preview-select-wrap">
-            <nav class="studio-picker" id="studio-picker" aria-label="스튜디오 선택">
-                <ul class="studio-picker-list" id="studio-picker-list"></ul>
-            </nav>
-        </div>
+    <header class="studio-detail-bar">
+        <p class="studio-detail-brand">art center &amp; art house commercial art studio</p>
+        <nav class="studio-detail-tabs-wrap" aria-label="스튜디오 선택">
+            <a href="studio.html" class="studio-detail-tab studio-detail-tab--map">배치도</a>
+            <ul class="studio-detail-tabs" id="studio-detail-tabs"></ul>
+        </nav>
         <span class="studio-preview-label">studio preview</span>
     </header>
 
-    <div class="studio-hero studio-img-wrapper">
+    <div class="studio-hero studio-hero--detail studio-img-wrapper">
         <img id="detail-hero-img" src="" alt="">
-        <span class="studio-hero-overlay">ART CENTER ART HOUSE</span>
     </div>
 
-    <section class="studio-intro">
-        <a href="studio.html" class="studio-detail-back">← 스튜디오 목록</a>
-        <div class="studio-intro-divider">art center & art house · commercial studio</div>
-        <h1 class="studio-detail-title" id="detail-title">스튜디오</h1>
-        <p class="studio-detail-lead" id="detail-lead"></p>
-        <dl class="studio-spec-list" id="detail-specs" style="max-width:640px"></dl>
+    <section class="studio-detail-split">
+        <div class="studio-detail-info">
+            <h1 class="studio-detail-title" id="detail-title">스튜디오</h1>
+            <p class="studio-detail-lead" id="detail-lead"></p>
+            <dl class="studio-spec-list studio-detail-specs" id="detail-specs"></dl>
+        </div>
+        <div class="studio-detail-plan">
+            <img id="detail-layout-img" src="" alt="배치도">
+        </div>
+    </section>
+
+    <section class="studio-info-box" id="detail-info-box" hidden>
+        <div class="studio-info-box__text">
+            <p class="studio-info-box__label">information</p>
+            <h2 class="studio-info-box__title" id="detail-info-title"></h2>
+        </div>
+        <div class="studio-info-box__diagram">
+            <img id="detail-info-img" src="" alt="">
+        </div>
+    </section>
+
+    <div id="detail-gallery" class="studio-detail-gallery"></div>
+
+    <section class="studio-map-section">
+        <div class="studio-map-inner">
+            <div class="studio-portfolio-section">
+                <p class="studio-portfolio-heading">portfolio</p>
+                <div class="studio-filters" id="studio-filters"></div>
+                <div id="studio-portfolio-slider"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="studio-detail-closing">
+        <p class="studio-detail-closing__lead">무엇이든 가능한 최적의 공간</p>
+        <h2 class="studio-detail-closing__title">ART CENTER ART HOUSE</h2>
+        <p class="studio-detail-closing__tags" id="detail-tags"></p>
     </section>
 
     <footer class="studio-page-footer pt-20 pb-12 px-6 md:px-12">
@@ -67,6 +97,12 @@
             <p>&copy; 2025 (주)일산아트센터 ART CENTER ART HOUSE. All rights reserved.</p>
         </div>
     </footer>
+
+    <div class="studio-lightbox" id="studio-lightbox" role="dialog" aria-modal="true" aria-label="이미지 보기">
+        <button type="button" class="studio-lightbox-close" aria-label="닫기">&times;</button>
+        <img src="" alt="">
+        <p class="studio-lightbox-title"></p>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase-config.js"></script>

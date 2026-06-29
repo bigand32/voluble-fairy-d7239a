@@ -8,6 +8,8 @@
     let editingId = null;
     let existingImageUrl = null;
     let pendingImage = null;
+    let existingLayoutUrl = null;
+    let pendingLayout = null;
 
     function getClient() {
         return window.supabaseClient;
@@ -78,9 +80,12 @@
         editingId = null;
         existingImageUrl = null;
         pendingImage = null;
+        existingLayoutUrl = null;
+        pendingLayout = null;
         form.reset();
         setEditMode(false);
         renderImagePreview();
+        renderLayoutPreview();
     }
 
     async function uploadFile(file) {
@@ -111,6 +116,52 @@
             pendingImage = null;
             existingImageUrl = null;
             renderImagePreview();
+        });
+    }
+
+    function renderLayoutPreview() {
+        const grid = document.getElementById('studio-layout-preview');
+        if (!grid) return;
+        const src = pendingLayout
+            ? URL.createObjectURL(pendingLayout)
+            : existingLayoutUrl;
+
+        grid.innerHTML = src
+            ? `<div class="admin-preview-item">
+                <img src="${src}" alt="">
+                <span class="badge">배치도</span>
+                <button type="button" class="remove-btn" id="studio-remove-layout">&times;</button>
+               </div>`
+            : '';
+
+        document.getElementById('studio-remove-layout')?.addEventListener('click', () => {
+            pendingLayout = null;
+            existingLayoutUrl = null;
+            renderLayoutPreview();
+        });
+    }
+
+    function setupLayoutZone() {
+        const zone = document.getElementById('studio-layout-zone');
+        const input = document.getElementById('studio-layout-input');
+        if (!zone || !input) return;
+
+        zone.addEventListener('click', () => input.click());
+        zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('dragover'); });
+        zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+        zone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            zone.classList.remove('dragover');
+            const file = Array.from(e.dataTransfer.files).find(f => f.type.startsWith('image/'));
+            if (file) { pendingLayout = file; existingLayoutUrl = null; renderLayoutPreview(); }
+        });
+        input.addEventListener('change', () => {
+            if (input.files[0]) {
+                pendingLayout = input.files[0];
+                existingLayoutUrl = null;
+                renderLayoutPreview();
+            }
+            input.value = '';
         });
     }
 
@@ -198,10 +249,13 @@
 
         editingId = item.id;
         existingImageUrl = item.image_url;
+        existingLayoutUrl = item.layout_image_url || null;
         pendingImage = null;
+        pendingLayout = null;
         fillForm(item);
         setEditMode(true);
         renderImagePreview();
+        renderLayoutPreview();
         formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -234,7 +288,14 @@
             let imageUrl = existingImageUrl;
             if (pendingImage) imageUrl = await uploadFile(pendingImage);
 
-            const payload = { ...data, image_url: imageUrl };
+            let layoutUrl = existingLayoutUrl;
+            if (pendingLayout) layoutUrl = await uploadFile(pendingLayout);
+
+            const payload = {
+                ...data,
+                image_url: imageUrl,
+                layout_image_url: layoutUrl || null
+            };
 
             if (editingId) {
                 const { error } = await sb.from('studio_items').update(payload).eq('id', editingId);
@@ -265,6 +326,7 @@
     });
 
     setupFileZone();
+    setupLayoutZone();
 
     window.AdminStudio = { loadList };
 })();

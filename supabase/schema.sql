@@ -185,3 +185,38 @@ alter table public.studio_items add column if not exists slug text;
 create unique index if not exists studio_items_slug_idx on public.studio_items (slug) where slug is not null;
 
 alter table public.portfolio_items add column if not exists category text;
+
+alter table public.studio_items add column if not exists layout_image_url text;
+
+-- 7. 스튜디오 상세 갤러리 섹션
+create table if not exists public.studio_sections (
+    id uuid primary key default gen_random_uuid(),
+    studio_id uuid not null references public.studio_items(id) on delete cascade,
+    title text not null,
+    floor_label text,
+    sort_order bigint not null default 0,
+    created_at timestamptz not null default now()
+);
+
+create table if not exists public.studio_section_images (
+    id uuid primary key default gen_random_uuid(),
+    section_id uuid not null references public.studio_sections(id) on delete cascade,
+    image_url text not null,
+    sort_order bigint not null default 0,
+    created_at timestamptz not null default now()
+);
+
+create index if not exists studio_sections_studio_idx on public.studio_sections (studio_id, sort_order);
+create index if not exists studio_section_images_section_idx on public.studio_section_images (section_id, sort_order);
+
+alter table public.studio_sections enable row level security;
+alter table public.studio_section_images enable row level security;
+
+create policy "studio_sections public read" on public.studio_sections for select using (true);
+create policy "studio_section_images public read" on public.studio_section_images for select using (true);
+create policy "studio_sections admin insert" on public.studio_sections for insert to authenticated with check (true);
+create policy "studio_sections admin update" on public.studio_sections for update to authenticated using (true);
+create policy "studio_sections admin delete" on public.studio_sections for delete to authenticated using (true);
+create policy "studio_section_images admin insert" on public.studio_section_images for insert to authenticated with check (true);
+create policy "studio_section_images admin update" on public.studio_section_images for update to authenticated using (true);
+create policy "studio_section_images admin delete" on public.studio_section_images for delete to authenticated using (true);
